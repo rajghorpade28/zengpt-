@@ -55,37 +55,42 @@ html.chatgpt-reveal-enabled [data-message-author-role="assistant"] .prose:not(.r
 /* Export to PDF Button Styling */
 #zengpt-export-pdf-btn {
     position: fixed;
-    bottom: 24px;
-    right: 24px;
-    background-color: #10a37f;
-    color: white;
-    border: none;
-    border-radius: 50px;
-    padding: 12px 20px;
-    font-size: 14px;
-    font-weight: 600;
+    bottom: 20px;
+    right: 20px;
+    background-color: transparent;
+    color: #999;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    padding: 8px;
     cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     z-index: 9999;
-    transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
-    font-family: inherit;
+    opacity: 0.4;
+    transition: opacity 0.2s, background-color 0.2s, color 0.2s;
     display: flex;
     align-items: center;
-    gap: 8px;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+}
+
+/* Match theme if possible */
+.dark #zengpt-export-pdf-btn {
+    color: #ececf1;
+}
+
+.light #zengpt-export-pdf-btn {
+    color: #666;
 }
 
 #zengpt-export-pdf-btn:hover {
-    background-color: #0e906f;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-}
-
-#zengpt-export-pdf-btn:active {
-    transform: translateY(0);
+    opacity: 1;
+    background-color: rgba(128, 128, 128, 0.1);
+    color: inherit;
 }
 
 /* Print CSS to ensure clean PDF export */
 @media print {
+
     /* Hide the Export to PDF button in the final PDF */
     #zengpt-export-pdf-btn {
         display: none !important;
@@ -97,13 +102,14 @@ html.chatgpt-reveal-enabled [data-message-author-role="assistant"] .prose:not(.r
     }
 
     /* Force all messages to be visible when printing regardless of ZenGPT state */
-    .markdown, .prose {
+    .markdown,
+    .prose {
         display: block !important;
     }
 
     /* Attempt to hide common ChatGPT sidebars and input areas during print */
-    nav, 
-    form, 
+    nav,
+    form,
     [class*="sidebar"],
     header {
         display: none !important;
