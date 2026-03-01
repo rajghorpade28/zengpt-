@@ -1,6 +1,3 @@
-// content.js
-// 100% Zero-Polling, Zero-DOM-Mutation architecture for INSTANT chat loading.
-
 (function () {
     'use strict';
 
@@ -15,13 +12,11 @@
         }
     }
 
-    // Load state
     chrome.storage.local.get(['enabled'], (result) => {
         isExtensionEnabled = result.enabled !== false;
         updateState();
     });
 
-    // Handle popup toggles
     chrome.runtime.onMessage.addListener((request) => {
         if (request.action === "toggleState") {
             isExtensionEnabled = request.enabled;
@@ -29,12 +24,9 @@
         }
     });
 
-    // Event Delegation: We listen globally so ZERO scanning is required.
-    // CSS ::before handles the visual button cleanly without JS appending anything!
     document.addEventListener('click', (e) => {
         if (!isExtensionEnabled) return;
 
-        // Ensure we don't interfere with the PDF export button
         if (e.target.closest('#zengpt-export-pdf-btn')) return;
 
         const msg = e.target.closest('[data-message-author-role="assistant"]');
@@ -45,7 +37,6 @@
         if (!isRevealed) {
             msg.classList.add('zengpt-revealed');
         } else {
-            // If revealed, clicking the top ~35 pixels acts as clicking "Hide Answer"
             const rect = msg.getBoundingClientRect();
             const clickY = e.clientY - rect.top;
 
@@ -55,7 +46,6 @@
         }
     });
 
-    // Inject PDF Button ONCE directly into the body avoiding React DOM overwrites
     function injectExportPdfButton() {
         if (document.getElementById('zengpt-export-pdf-btn')) return;
 
@@ -68,12 +58,10 @@
             e.preventDefault();
             e.stopPropagation();
 
-            // Reveal everything perfectly before printing
             document.querySelectorAll('[data-message-author-role="assistant"]').forEach(msg => {
                 msg.classList.add('zengpt-revealed');
             });
 
-            // Give layout a tiny split second to render the expanded text before printing
             setTimeout(() => {
                 window.print();
             }, 100);
@@ -82,7 +70,6 @@
         document.body.appendChild(pdfBtn);
     }
 
-    // Try injecting instantly, or wait for body
     if (document.body) {
         injectExportPdfButton();
     } else {

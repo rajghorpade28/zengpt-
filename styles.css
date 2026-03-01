@@ -1,14 +1,9 @@
-/* Zero Javascript DOM overhead tracking! */
-/* We use pure CSS pseudoelements for the toggle buttons */
-
-/* Ensure the message container has space for our fake button */
 html.chatgpt-reveal-enabled [data-message-author-role="assistant"] {
     position: relative;
     padding-top: 40px !important;
     min-height: 44px !important;
 }
 
-/* Hide content when not revealed */
 html.chatgpt-reveal-enabled [data-message-author-role="assistant"]:not(.zengpt-revealed) .markdown,
 html.chatgpt-reveal-enabled [data-message-author-role="assistant"]:not(.zengpt-revealed) .prose {
     opacity: 0 !important;
@@ -20,7 +15,6 @@ html.chatgpt-reveal-enabled [data-message-author-role="assistant"]:not(.zengpt-r
     border: none !important;
 }
 
-/* Base button styling via CSS ::before */
 html.chatgpt-reveal-enabled [data-message-author-role="assistant"]::before {
     position: absolute;
     top: 4px;
@@ -37,7 +31,6 @@ html.chatgpt-reveal-enabled [data-message-author-role="assistant"]::before {
     font-family: inherit;
 }
 
-/* Text variations */
 html.chatgpt-reveal-enabled [data-message-author-role="assistant"]:not(.zengpt-revealed)::before {
     content: "Reveal Answer";
 }
@@ -46,12 +39,10 @@ html.chatgpt-reveal-enabled [data-message-author-role="assistant"].zengpt-reveal
     content: "Hide Answer";
 }
 
-/* Hover state */
 html.chatgpt-reveal-enabled [data-message-author-role="assistant"]:hover::before {
     background-color: rgba(128, 128, 128, 0.1);
 }
 
-/* Theme Matching */
 .dark html.chatgpt-reveal-enabled [data-message-author-role="assistant"]::before {
     border-color: #565869;
     color: #ececf1;
@@ -62,7 +53,6 @@ html.chatgpt-reveal-enabled [data-message-author-role="assistant"]:hover::before
     color: #0f0f0f;
 }
 
-/* PDF BUTTON STYLES */
 #zengpt-export-pdf-btn {
     position: fixed;
     bottom: 20px;
@@ -104,7 +94,6 @@ html.chatgpt-reveal-enabled [data-message-author-role="assistant"]:hover::before
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Print Overrides */
 @media print {
     #zengpt-export-pdf-btn {
         display: none !important;
