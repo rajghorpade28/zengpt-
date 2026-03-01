@@ -7,17 +7,17 @@
         "storage"
     ],
     "icons": {
-        "16": "icon16.png",
-        "48": "icon48.png",
-        "128": "icon128.png"
+        "16": "icons/icon16.png",
+        "48": "icons/icon48.png",
+        "128": "icons/icon128.png"
     },
     "action": {
         "default_icon": {
-            "16": "icon16.png",
-            "48": "icon48.png",
-            "128": "icon128.png"
+            "16": "icons/icon16.png",
+            "48": "icons/icon48.png",
+            "128": "icons/icon128.png"
         },
-        "default_popup": "popup.html"
+        "default_popup": "src/popup/popup.html"
     },
     "content_scripts": [
         {
@@ -26,10 +26,10 @@
                 "https://chat.openai.com/*"
             ],
             "js": [
-                "content.js"
+                "src/content/content.js"
             ],
             "css": [
-                "styles.css"
+                "src/content/styles.css"
             ],
             "run_at": "document_start"
         }
