@@ -10,10 +10,16 @@ html:not(.chatgpt-reveal-enabled) .chatgpt-reveal-extension-container {
     display: none !important;
 }
 
-/* If enabled, hide content by default */
+/* If enabled, hide content by default without breaking scrolling layout in React */
 html.chatgpt-reveal-enabled [data-message-author-role="assistant"] .markdown:not(.revealed-content),
 html.chatgpt-reveal-enabled [data-message-author-role="assistant"] .prose:not(.revealed-content) {
-    display: none !important;
+    opacity: 0 !important;
+    max-height: 0px !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    pointer-events: none !important;
+    border: none !important;
 }
 
 /* Button Styling (Visible if enabled) */

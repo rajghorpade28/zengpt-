@@ -81,21 +81,18 @@
 
     // --- Efficient Mutation Observer ---
 
-    let observerTimeout = null;
-
-    const observer = new MutationObserver(() => {
-        // Debounce DOM scanning to vastly improve performance during text streaming.
-        // Hiding is handled instantly by CSS, so we only need this to inject our buttons.
-        if (observerTimeout) return;
-
-        observerTimeout = setTimeout(() => {
+    function startPolling() {
+        setInterval(() => {
+            // 1. Process messages
             const messages = document.querySelectorAll(SELECTOR_ASSISTANT_MSG);
             for (let i = 0; i < messages.length; i++) {
                 processMessage(messages[i]);
             }
-            observerTimeout = null;
-        }, 300); // 300ms debounce ensures it only runs a few times per second at most
-    });
+
+            // 2. Ensure PDF export button is present (React router can sometimes remove it)
+            injectExportPdfButton();
+        }, 500); // 500ms is perfectly responsive for a button but prevents 100% CPU lock during streams
+    }
 
     // --- Initialization ---
 
@@ -124,28 +121,10 @@
     }
 
     function init() {
-        // 1. Load preference immediately
+        // Load preference immediately
         loadState();
-
-        // 2. Start observer early (on documentElement if body not ready, but usually on body)
-        // Since run_at is document_start, document.body might be null.
-        if (document.body) {
-            observer.observe(document.body, { childList: true, subtree: true });
-            // Initial scan
-            document.querySelectorAll(SELECTOR_ASSISTANT_MSG).forEach(processMessage);
-            injectExportPdfButton();
-        } else {
-            // Wait for body to be available
-            const initObserver = new MutationObserver(() => {
-                if (document.body) {
-                    initObserver.disconnect();
-                    observer.observe(document.body, { childList: true, subtree: true });
-                    document.querySelectorAll(SELECTOR_ASSISTANT_MSG).forEach(processMessage);
-                    injectExportPdfButton();
-                }
-            });
-            initObserver.observe(document.documentElement, { childList: true });
-        }
+        // Start polling loop instead of MutationObserver to completely avoid stream rendering lag
+        startPolling();
     }
 
     // Listen for popup messages
