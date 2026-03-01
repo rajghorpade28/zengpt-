@@ -81,34 +81,20 @@
 
     // --- Efficient Mutation Observer ---
 
-    const observer = new MutationObserver((mutations) => {
-        // Fast path: Check only added nodes
-        for (const mutation of mutations) {
-            if (mutation.type === 'childList') {
-                for (const node of mutation.addedNodes) {
-                    if (node.nodeType === Node.ELEMENT_NODE) {
-                        // 1. Direct match (the added node IS a message)
-                        if (node.matches(SELECTOR_ASSISTANT_MSG)) {
-                            processMessage(node);
-                        }
-                        // 2. Contains messages (e.g. initial load or large container added)
-                        // Use querySelectorAll only if it's a container that *might* have messages
-                        // to avoid scanning every small span/div.
-                        // However, ChatGPT structure is usually flat list of messages in a container.
-                        else if (node.firstElementChild && (node.querySelector(SELECTOR_ASSISTANT_MSG))) {
-                            const nested = node.querySelectorAll(SELECTOR_ASSISTANT_MSG);
-                            for (const msg of nested) processMessage(msg);
-                        }
-                        // 3. Dynamic content update case (rare but possible):
-                        // If the content wrapper itself is added to an *existing* message container.
-                        else if (node.matches(SELECTOR_CONTENT_WRAPPER)) {
-                            const parentMsg = node.closest(SELECTOR_ASSISTANT_MSG);
-                            if (parentMsg) processMessage(parentMsg);
-                        }
-                    }
-                }
+    let observerTimeout = null;
+
+    const observer = new MutationObserver(() => {
+        // Debounce DOM scanning to vastly improve performance during text streaming.
+        // Hiding is handled instantly by CSS, so we only need this to inject our buttons.
+        if (observerTimeout) return;
+
+        observerTimeout = setTimeout(() => {
+            const messages = document.querySelectorAll(SELECTOR_ASSISTANT_MSG);
+            for (let i = 0; i < messages.length; i++) {
+                processMessage(messages[i]);
             }
-        }
+            observerTimeout = null;
+        }, 300); // 300ms debounce ensures it only runs a few times per second at most
     });
 
     // --- Initialization ---
