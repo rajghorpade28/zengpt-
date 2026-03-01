@@ -13,6 +13,7 @@ Ever felt a bit overwhelmed or instantly distracted when ChatGPT fires back a ma
 - 🔘 **Click-to-reveal:** Adds a smooth, unobtrusive button to show the text only when you're actually ready to focus on it.
 - 🌊 **Streaming support:** Fully supports ChatGPT's live text streaming without breaking the layout or the hiding mechanism.
 - 🗣️ **Preserves prompts:** Leaves your own messages alone so you never lose context of what you asked.
+- 📄 **Export to PDF:** Need to save the conversation for later? Just click the stylish "Export to PDF" floating button in the bottom right corner. It automatically reveals all hidden content and formats the chat beautifully for offline reading without all the UI clutter.
 - 🪶 **Feather-light & Private:** Super lightweight, requires minimal permissions, and absolutely no tracking or data collection. It just gets the job done locally on your machine.
 - ⚙️ **Easy toggle:** Comes with a clean popup menu to easily toggle the auto-hiding feature on or off globally.
 

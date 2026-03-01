@@ -113,6 +113,30 @@
 
     // --- Initialization ---
 
+    function injectExportPdfButton() {
+        if (document.getElementById('zengpt-export-pdf-btn')) return;
+
+        const pdfBtn = document.createElement('button');
+        pdfBtn.id = 'zengpt-export-pdf-btn';
+        pdfBtn.textContent = '📄 Export to PDF';
+        pdfBtn.title = 'Export current chat as PDF';
+        
+        pdfBtn.addEventListener('click', () => {
+            // Reveal all hidden answers before printing
+            const hiddenContents = document.querySelectorAll(SELECTOR_CONTENT_WRAPPER + ':not(.' + CLASS_REVEALED + ')');
+            hiddenContents.forEach(node => {
+                node.classList.add(CLASS_REVEALED);
+                const btn = node.parentNode?.querySelector('.' + BTN_CLASS);
+                if (btn) btn.textContent = 'Hide Answer';
+            });
+            
+            // Trigger browser print dialog (which allows saving as PDF)
+            window.print();
+        });
+
+        document.body.appendChild(pdfBtn);
+    }
+
     function init() {
         // 1. Load preference immediately
         loadState();
@@ -123,6 +147,7 @@
             observer.observe(document.body, { childList: true, subtree: true });
             // Initial scan
             document.querySelectorAll(SELECTOR_ASSISTANT_MSG).forEach(processMessage);
+            injectExportPdfButton();
         } else {
             // Wait for body to be available
             const initObserver = new MutationObserver(() => {
@@ -130,6 +155,7 @@
                     initObserver.disconnect();
                     observer.observe(document.body, { childList: true, subtree: true });
                     document.querySelectorAll(SELECTOR_ASSISTANT_MSG).forEach(processMessage);
+                    injectExportPdfButton();
                 }
             });
             initObserver.observe(document.documentElement, { childList: true });
