@@ -1,0 +1,27 @@
+{
+    "manifest_version": 3,
+    "name": "ZenGPT",
+    "version": "1.0",
+    "description": "Minimize distractions by hiding ChatGPT responses until you're ready to read them.",
+    "permissions": [
+        "storage"
+    ],
+    "action": {
+        "default_popup": "popup.html"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://chatgpt.com/*",
+                "https://chat.openai.com/*"
+            ],
+            "js": [
+                "content.js"
+            ],
+            "css": [
+                "styles.css"
+            ],
+            "run_at": "document_start"
+        }
+    ]
+}

@@ -1,0 +1,53 @@
+/* If not enabled, show everything as normal */
+html:not(.chatgpt-reveal-enabled) [data-message-author-role="assistant"] .markdown:not(.revealed-content),
+html:not(.chatgpt-reveal-enabled) [data-message-author-role="assistant"] .prose:not(.revealed-content) {
+    display: block !important;
+}
+
+/* If not enabled, hide my buttons */
+html:not(.chatgpt-reveal-enabled) .chatgpt-reveal-extension-btn,
+html:not(.chatgpt-reveal-enabled) .chatgpt-reveal-extension-container {
+    display: none !important;
+}
+
+/* If enabled, hide content by default */
+html.chatgpt-reveal-enabled [data-message-author-role="assistant"] .markdown:not(.revealed-content),
+html.chatgpt-reveal-enabled [data-message-author-role="assistant"] .prose:not(.revealed-content) {
+    display: none !important;
+}
+
+/* Button Styling (Visible if enabled) */
+.chatgpt-reveal-extension-btn {
+    background-color: transparent;
+    border: 1px solid #565869;
+    color: inherit;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-bottom: 8px;
+    display: inline-flex;
+    align-items: center;
+    transition: background-color 0.2s, border-color 0.2s;
+    font-family: inherit;
+}
+
+/* Dark mode default fallback */
+.dark .chatgpt-reveal-extension-btn {
+    border-color: #565869;
+    color: #ececf1;
+}
+
+.light .chatgpt-reveal-extension-btn {
+    border-color: #e5e5e5;
+    color: #0f0f0f;
+}
+
+.chatgpt-reveal-extension-btn:hover {
+    background-color: rgba(128, 128, 128, 0.1);
+}
+
+.chatgpt-reveal-extension-container {
+    margin-bottom: 0.5rem;
+}
