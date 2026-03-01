@@ -26,7 +26,7 @@ Installing it takes less than a minute:
 1. 🌐 Open Chrome and type `chrome://extensions/` in your URL bar.
 2. 🛠️ Toggle on **Developer mode** in the top-right corner of the page.
 3. 📂 Click the **Load unpacked** button (usually on the top-left).
-4. 📁 Browse to and select this entire `chatgpt-reveal-extension` folder.
+4. 📁 Browse to and select this entire `-zengpt-` folder.
 5. 🎉 That's it! Open [ChatGPT](https://chatgpt.com), ask it a question, and enjoy the peace and quiet.
 
 ---
